@@ -1,0 +1,436 @@
+
+#root {
+  min-height: 100vh;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.card-page {
+  --text-main: #713d5b;
+  --text-muted: #98677f;
+  --surface: rgba(255, 255, 255, 0.82);
+
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: 40px 20px 24px;
+  overflow: hidden;
+  color: var(--text-main);
+  font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+  background:
+    radial-gradient(ellipse at 15% 20%, #ffe1ec 0, transparent 38%),
+    radial-gradient(ellipse at 85% 75%, #e9dcff 0, transparent 40%),
+    linear-gradient(145deg, #fff4f7, #f8edff 55%, #e9f3ff);
+  transition: background 600ms ease;
+}
+
+.background-glow {
+  position: absolute;
+  z-index: -1;
+  width: 420px;
+  height: 420px;
+  top: 50%;
+  left: 50%;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  filter: blur(70px);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.card {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 440px);
+  padding: 20px 20px 24px;
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 32px;
+  background: var(--surface);
+  box-shadow:
+    0 24px 70px rgba(145, 96, 130, 0.15),
+    0 4px 14px rgba(145, 96, 130, 0.06);
+  backdrop-filter: blur(16px);
+  text-align: center;
+  animation: card-appear 650ms ease both;
+}
+
+.card-decoration {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+  color: #d98caf;
+  font-size: 25px;
+}
+
+.card-decoration span:nth-child(2) {
+  font-size: 21px;
+  animation: sparkle-rotate 4s linear infinite;
+}
+
+
+.character-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 280px;
+  min-height: 0;
+  margin: 0 0 8px;
+  overflow: visible;
+}
+
+.character {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: 340px;
+  max-height: 280px;
+  object-fit: contain;
+  transform-origin: center bottom;
+  animation: character-sway 3s ease-in-out infinite;
+}
+
+/* При переходе к финалу запускается отдельная анимация */
+.character-final {
+  animation: final-entrance 800ms ease-out both;
+}
+
+.character-placeholder {
+  display: grid;
+  place-items: center;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #ffe2ee, #f1e3ff);
+  font-size: 92px;
+  animation: character-sway 3s ease-in-out infinite;
+}
+
+.card-text {
+  animation: content-appear 350ms ease both;
+}
+
+.card-text h1 {
+  margin: 0;
+  font-size: clamp(20px, 4.5vw, 26px);
+  line-height: 1.2;
+  letter-spacing: -0.7px;
+  font-weight: 800;
+}
+
+.card-text p {
+  margin: 12px 0 0;
+  color: var(--text-muted);
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 27px;
+  animation: content-appear 350ms ease both;
+}
+
+.answer-button {
+  width: 100%;
+  min-height: 54px;
+  padding: 14px 20px;
+  border: 0;
+  border-radius: 18px;
+  font: inherit;
+  font-size: 19px;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    background 180ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.primary-button {
+  color: white;
+  background: linear-gradient(135deg, #ef9cba, #df79a3);
+  box-shadow: 0 7px 18px rgba(218, 111, 157, 0.25);
+}
+
+.primary-button:hover {
+  background: linear-gradient(135deg, #ee8eb2, #d96898);
+  box-shadow: 0 10px 24px rgba(218, 111, 157, 0.32);
+  transform: translateY(-3px);
+}
+
+.secondary-button {
+  color: #875570;
+  border: 1px solid #f0c9da;
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.secondary-button:hover {
+  background: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(145, 96, 130, 0.1);
+}
+
+.answer-button:active {
+  transform: scale(0.97);
+}
+
+.answer-button:focus-visible {
+  outline: 3px solid #a76ee0;
+  outline-offset: 4px;
+}
+
+.final-actions {
+  margin-top: 18px;
+}
+
+.final-heart {
+  display: block;
+  color: #e681a7;
+  font-size: 34px;
+  animation: heart-beat 1.2s ease-in-out infinite;
+}
+
+.card-footer {
+  position: relative;
+  z-index: 1;
+  margin-top: 24px;
+  color: #a17c94;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+}
+
+.card-footer span {
+  color: #e681a7;
+}
+
+/* Эти декоративные символы создаются только на финальном этапе */
+.sparkle {
+  position: absolute;
+  z-index: 0;
+  color: #d99ab8;
+  pointer-events: none;
+  user-select: none;
+  animation: sparkle-float 2.5s ease-in-out infinite;
+}
+
+.sparkle-1 {
+  top: 12%;
+  left: 12%;
+  font-size: 30px;
+}
+
+.sparkle-2 {
+  top: 22%;
+  right: 12%;
+  font-size: 36px;
+  animation-delay: -1s;
+}
+
+.sparkle-3 {
+  top: 67%;
+  left: 8%;
+  font-size: 29px;
+  animation-delay: -0.5s;
+}
+
+.sparkle-4 {
+  right: 9%;
+  bottom: 17%;
+  font-size: 34px;
+  animation-delay: -1.5s;
+}
+
+.sparkle-5 {
+  top: 48%;
+  left: 5%;
+  font-size: 24px;
+  animation-delay: -0.8s;
+}
+
+.sparkle-6 {
+  right: 5%;
+  top: 53%;
+  font-size: 25px;
+  animation-delay: -2s;
+}
+
+/* Финальная сцена */
+.card-page-final {
+  background:
+    radial-gradient(ellipse at 50% 10%, #ffe0e9 0, transparent 40%),
+    radial-gradient(ellipse at 80% 80%, #ffe9c9 0, transparent 40%),
+    linear-gradient(145deg, #fff0f5, #f4eaff 55%, #fff5e8);
+}
+
+
+.card-final .character-container {
+  height: 300px;
+  min-height: 0;
+  margin-bottom: 8px;
+}
+
+.card-final .character {
+  max-width: 360px;
+  max-height: 300px;
+}
+
+.card-final .card-text h1 {
+  color: #d26591;
+}
+
+.card-final .card-text p {
+  font-size: 16px;
+}
+
+.card-page-final .sparkle {
+  color: #dca05e;
+}
+
+@keyframes character-sway {
+  0%, 100% {
+    transform: translateY(0) rotate(-2deg);
+  }
+
+  50% {
+    transform: translateY(-8px) rotate(2deg);
+  }
+}
+
+@keyframes final-entrance {
+  from {
+    opacity: 0;
+    transform: scale(0.75) translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes content-appear {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes card-appear {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes sparkle-float {
+  0%, 100% {
+    opacity: 0.45;
+    transform: translateY(0) rotate(0deg) scale(1);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translateY(-14px) rotate(18deg) scale(1.15);
+  }
+}
+
+@keyframes sparkle-rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes heart-beat {
+  0%, 100% {
+    transform: scale(1);
+  }
+
+  15% {
+    transform: scale(1.18);
+  }
+
+  30% {
+    transform: scale(1);
+  }
+
+  45% {
+    transform: scale(1.12);
+  }
+}
+
+@media (max-width: 480px) {
+  .card-page {
+    padding: 24px 16px 20px;
+  }
+
+  
+.card {
+  padding: 18px 16px 22px;
+  border-radius: 27px;
+}
+
+.character-container {
+  height: 230px;
+  min-height: 0;
+  margin-bottom: 8px;
+}
+
+.character {
+  max-height: 230px;
+}
+
+.card-final .character-container {
+  height: 250px;
+}
+
+.card-final .character {
+  max-height: 250px;
+}
+
+
+  .character-placeholder {
+    width: 185px;
+    height: 185px;
+    font-size: 78px;
+  }
+
+  .sparkle-1 {
+    left: 5%;
+  }
+
+  .sparkle-2 {
+    right: 5%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
